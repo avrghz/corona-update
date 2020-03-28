@@ -4,12 +4,15 @@
   import { flip } from "svelte/animate";
   import { fade } from "svelte/transition";
   import Chart from "./Components/Chart.svelte";
-  import { fetchCountries, fetchTotalCountPerDay } from "./data.js";
+  import {
+    fetchCountries,
+    fetchTotalCountPerDay,
+    fetchSummary
+  } from "./service.js";
 
-  let showChart = false;
   let countries = [];
   let chartData = {
-    labels: [],
+    xaxis: [],
     data: []
   };
 
@@ -24,6 +27,7 @@
   const onCountryChange = async ({ detail: option }) => {
     try {
       chartData = await fetchTotalCountPerDay(option.value);
+      await fetchSummary(option.value);
     } catch (e) {
       console.log("error: onCountryChange", e);
     }
@@ -32,26 +36,41 @@
 
 <style>
   .container {
-    max-width: 800px;
-    margin: auto;
-    box-sizing: border-box;
-    padding: 15px;
+    display: grid;
+    grid-template-areas:
+      "header . "
+      "content1 content2";
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
   }
 
   .chart-holder {
     margin-top: 20px;
   }
+
+  .in-header {
+    grid-area: header;
+  }
+
+  .in-content-1 {
+    grid-area: content1;
+  }
 </style>
 
 <div class="container">
-  <Select
-    items={countries}
-    placeholder="Search for country"
-    on:select={onCountryChange} />
+  <div class="select-box in-header">
+    <Select
+      items={countries}
+      placeholder="Search for country"
+      on:select={onCountryChange} />
+  </div>
 
-  {#if chartData.labels.length && chartData.data.length}
-    <div class="chart-holder" transition:fade>
-      <Chart title="Count" {...chartData} />
-    </div>
-  {/if}
+  <div class="chart-holder in-content-1" transition:fade>
+    {#if chartData.xaxis.length && chartData.data.length}
+      <h3>Confirmed cases</h3>
+      <Chart id="countByCuntry" seriesName="Count" {...chartData} />
+    {:else}
+      <p>No records found</p>
+    {/if}
+  </div>
 </div>

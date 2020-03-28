@@ -25,28 +25,37 @@ export const fetchCountries = async () => {
 };
 
 export const fetchTotalCountPerDay = async country => {
-  const res = await fetch(`${root}/total/dayone/country/${country}/status/confirmed`, {
+  const res = await fetch(`${root}/total/country/${country}/status/confirmed`, {
     method: "GET"
   }).then(res => res.json());
 
-  const labels = [];
+  const xaxis = [];
   const data = [];
-  if (res && res.length) {
-    let count;
 
-    for (let i = 0; i < res.length; i++) {
-      count = res[i].Cases;
-      labels.push(format(new Date(res[i].Date), "MM/dd/yyyy"));
-      for (let j = i + 1; j < res.length; j++) {
-        if (!sameDay(res[j].Date, res[i].Date)) {
-          break;
-        }
-        i += 1;
-        count += res[j].Cases;
-      }
-      data.push(count);
-    }
+  if (res && res.length) {
+    res.forEach(o => {
+      xaxis.push(format(new Date(o.Date), "dd-MM-yy"));
+      data.push(o.Cases);
+    });
   }
 
-  return { labels, data };
+  return { xaxis, data };
+};
+
+export const fetchSummary = async country => {
+  const res = await fetch(`${root}/summary`, {
+    method: "GET"
+  }).then(res => res.json());
+
+  let records = null;
+  let lastUpdated = null;
+  if (res && res.length) {
+    lastUpdated = format(new Date(res.Date), "dd-MM-yy");
+    records = res.Countries.find(el => el.Slug === country);
+  }
+
+  return {
+    lastUpdated,
+    records
+  };
 };

@@ -1,43 +1,65 @@
 <script>
   import { onMount, afterUpdate } from "svelte";
   import Chart from "chart.js";
+  import ApexCharts from "apexcharts";
 
-  export let labels;
-  export let title;
+  export let id;
+  export let seriesName;
+  export let xaxis;
   export let data;
+  export let colors = ["#00BAEC"];
 
   let chart;
 
+  let options = {
+    chart: {
+      type: "area",
+      toolbar: {
+        tools: {
+          download: true,
+          selection: true,
+          zoom: true,
+          zoomin: true,
+          zoomout: true,
+          pan: false
+        }
+      }
+    },
+    colors,
+    series: [
+      {
+        name: seriesName,
+        data: []
+      }
+    ],
+    xaxis: {
+      categories: []
+    }
+  };
+
   onMount(async () => {
-    renderChart(labels, data);
+    chart = new ApexCharts(document.querySelector(`#${id}`), options);
+    chart.render();
   });
 
   afterUpdate(() => {
-    if (chart) {
-      chart.data.labels = labels;
-      chart.data.datasets[0].data = data;
-      chart.update();
-    }
+    updateChart(xaxis, data, seriesName);
   });
 
-  function renderChart(l, d) {
-    const ctx = document.getElementById("myChart").getContext("2d");
-    chart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: l,
-        datasets: [
+  function updateChart(categories, chatData, name) {
+    if (chart) {
+      chart.updateOptions({
+        series: [
           {
-            label: title,
-            backgroundColor: "rgba(229,28,36, .25)",
-            borderColor: "rgba(229,28,36, 1)",
-            data: d
+            data: chatData
           }
-        ]
-      },
-      options: {}
-    });
+        ],
+        xaxis: {
+          categories
+        }
+      });
+    }
   }
 </script>
 
-<canvas id="myChart" />
+<div {id} />
