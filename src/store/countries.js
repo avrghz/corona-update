@@ -7,7 +7,7 @@ const createStore = () => {
     countries: [],
     error: null,
     isLoading: false,
-    selected: "netherlands"
+    selected: "Netherlands"
   });
 
   return {
@@ -32,7 +32,8 @@ const createStore = () => {
               !!o.Country
                 ? acc.concat({
                     label: o.Country,
-                    value: o.Country.toLowerCase()
+                    value: o.Country,
+                    id: o.Slug
                   })
                 : acc,
             []

@@ -4,9 +4,9 @@ import { format } from "date-fns";
 const root = "https://api.covid19api.com";
 
 const statusList = [
-  { label: "Confirmed", value: "confirmed" },
-  { label: "Deaths", value: "deaths" },
-  { label: "Recovered", value: "recovered" }
+  { label: "Confirmed", value: "Confirmed" },
+  { label: "Deaths", value: "Deaths" },
+  { label: "Recovered", value: "Recovered" }
 ];
 
 const createStore = () => {
@@ -22,7 +22,7 @@ const createStore = () => {
   return {
     subscribe: store.subscribe,
     setSelected: selected => store.update(s => ({ ...s, selected })),
-    fetchPerDayStatus: async (country, status = "confirmed") => {
+    fetchPerDayStatus: async (country, status = statusList[0].value) => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 

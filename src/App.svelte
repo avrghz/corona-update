@@ -17,7 +17,7 @@
     if ($countryStore.selected) {
       statusStore.fetchPerDayStatus(
         $countryStore.selected,
-        $statusStore.selected.value
+        $statusStore.selected
       );
       summaryStore.fetch($countryStore.selected);
     }
@@ -26,6 +26,7 @@
   const onCountryChange = async ({ detail: option }) => {
     countryStore.setSelected(option.value);
     statusStore.fetchPerDayStatus(option.value, $statusStore.selected);
+    summaryStore.fetch(option.value);
   };
 
   const onStatusChange = async ({ detail: option }) => {
@@ -40,7 +41,7 @@
     grid-template-areas:
       "header . "
       "content1 content2";
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2.5fr 1.5fr;
     grid-gap: 1rem 1.5rem;
   }
 
@@ -70,6 +71,14 @@
     grid-template-columns: 1fr 4fr;
     margin-bottom: 0.75rem;
   }
+
+  .legend {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 0.9rem;
+    color: rgb(179, 176, 176);
+  }
 </style>
 
 <div class="container">
@@ -80,8 +89,7 @@
       <Select
         items={$countryStore.countries}
         placeholder="Search for country"
-        on:select={onCountryChange}
-        selectedValue={$countryStore.selected} />
+        on:select={onCountryChange} />
     {/if}
 
   </div>
@@ -132,5 +140,7 @@
         count={$summaryStore.newRecovered}
         total={$summaryStore.totalRecovered} />
     </Card>
+
+    <div class="legend">New Cases / Total Cases</div>
   </div>
 </div>

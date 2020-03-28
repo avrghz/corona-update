@@ -38,7 +38,7 @@ const createStore = () => {
             TotalDeaths: totalDeaths,
             NewRecovered: newRecovered,
             TotalRecovered: totalRecovered
-          } = response.Countries.find(r => r.Slug === country);
+          } = response.Countries.find(r => r.Slug === country.toLowerCase());
 
           return {
             ...s,

@@ -5,8 +5,8 @@
 <style>
   .card {
     padding: 1.5rem 1.25rem 1rem 1.25rem;
-    box-shadow: 0 1px 5px 1px #ccc;
-    margin-bottom: 1rem;
+    border: 1px solid rgb(136, 135, 135);
+    margin-bottom: 1.5rem;
   }
 
   h3 {
