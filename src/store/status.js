@@ -3,29 +3,30 @@ import { format } from "date-fns";
 
 const root = "https://api.covid19api.com";
 
+const statusList = [
+  { label: "Confirmed", value: "confirmed" },
+  { label: "Deaths", value: "deaths" },
+  { label: "Recovered", value: "recovered" }
+];
+
 const createStore = () => {
   const store = writable({
-    status: {
-      date: [],
-      count: [],
-      newConfirmed: 0,
-      totalConfirmed: 0,
-      newDeaths: 0,
-      totalDeaths: 0,
-      newRecovered: 0,
-      totalRecovered: 0
-    },
+    date: [],
+    count: [],
+    statusList,
+    selected: statusList[0].value,
     error: null,
     isLoading: false
   });
 
   return {
     subscribe: store.subscribe,
-    fetchPerDayConfirmedStatus: async country => {
+    setSelected: selected => store.update(s => ({ ...s, selected })),
+    fetchPerDayStatus: async (country, status = "confirmed") => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const response = await fetch(`${root}/total/country/${country}/status/confirmed`, {
+        const response = await fetch(`${root}/total/country/${country}/status/${status}`, {
           method: "GET"
         }).then(res => res.json());
 
@@ -36,7 +37,7 @@ const createStore = () => {
         store.update(s => ({
           ...s,
           isLoading: false,
-          status: response.reduce(
+          ...response.reduce(
             (acc, r) => ({
               ...acc,
               date: [...acc.date, format(new Date(r.Date), "dd-MM-yy")],

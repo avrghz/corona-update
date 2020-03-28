@@ -12,6 +12,7 @@ const createStore = () => {
 
   return {
     subscribe: store.subscribe,
+    setSelected: selected => store.update(s => ({ ...s, selected })),
     fetch: async () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
@@ -45,8 +46,7 @@ const createStore = () => {
           isLoading: false
         }));
       }
-    },
-    setSelected: selected => store.update(s => ({ ...s, selected }))
+    }
   };
 };
 
