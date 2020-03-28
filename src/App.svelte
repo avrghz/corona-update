@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import Select from "svelte-select";
   import { flip } from "svelte/animate";
-  import { fade } from "svelte/transition";
+  import { fade, scale } from "svelte/transition";
   import Chart from "./Components/Chart.svelte";
   import Card from "./Components/Card.svelte";
   import CountDisplay from "./Components/CountDisplay.svelte";
@@ -61,6 +61,10 @@
     word-break: break-word;
   }
 
+  .chart-holder {
+    min-height: 150px;
+  }
+
   .select-box {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -79,6 +83,30 @@
     font-size: 0.9rem;
     color: rgb(179, 176, 176);
   }
+
+  .select-box-theme {
+    --borderRadius: 0;
+    --placeholderColor: rgba(179, 176, 176, 0.25);
+    --background: transparent;
+    --inputColor: rgb(179, 176, 176);
+    --border: 1px solid rgb(179, 176, 176);
+    --listBackground: black;
+    --listBorderRadius: 0;
+    --itemIsActiveBG: rgb(0, 186, 230);
+    --itemHoverBG: rgb(22, 69, 82);
+    --listShadow: 0 0 1px 1px rgb(179, 176, 176);
+    --itemFirstBorderRadius: 0;
+  }
+
+  .country-switcher {
+    --inputFontSize: 2rem;
+    --height: 60px;
+  }
+
+  .chart-switcher {
+    --height: 40px;
+    --border: 0;
+  }
 </style>
 
 <div class="container">
@@ -86,36 +114,44 @@
     {#if $countryStore.isLoading}
       <div>Loading...</div>
     {:else}
-      <Select
-        items={$countryStore.countries}
-        placeholder="Search for country"
-        on:select={onCountryChange} />
+      <div class="select-box-theme country-switcher" transition:fade>
+        <Select
+          items={$countryStore.countries}
+          placeholder="Search Country here"
+          on:select={onCountryChange}
+          selectedValue={$countryStore.selected} />
+      </div>
     {/if}
 
   </div>
 
-  <div class="chart-holder in-content-1" transition:fade>
+  <div class="in-content-1">
     <Card>
-      {#if $statusStore.count.length && $statusStore.date.length}
-        <div class="chart-switcher">
-          <Select
-            items={$statusStore.statusList}
-            isClearable={false}
-            isSearchable={false}
-            selectedValue={$statusStore.selected}
-            on:select={onStatusChange} />
-        </div>
+      <div class="chart-holder">
+        {#if $statusStore.count.length && $statusStore.date.length}
+          <div class="select-box-theme chart-switcher" transition:fade>
+            <Select
+              items={$statusStore.statusList}
+              isClearable={false}
+              isSearchable={false}
+              selectedValue={$statusStore.selected}
+              on:select={onStatusChange} />
+          </div>
 
-        <Chart
-          id="countByCuntry"
-          seriesName="Count"
-          xaxis={$statusStore.date}
-          data={$statusStore.count} />
-      {:else if $countryStore.selected}
-        <p>No records found</p>
-      {:else}
-        <p>Select a country</p>
-      {/if}
+          <div>
+            <Chart
+              id="countByCuntry"
+              seriesName="Count"
+              xaxis={$statusStore.date}
+              data={$statusStore.count} />
+          </div>
+        {:else if $countryStore.selected}
+          <p>No records found</p>
+        {:else}
+          <p>Select a country</p>
+        {/if}
+      </div>
+
     </Card>
   </div>
 

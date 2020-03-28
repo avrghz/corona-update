@@ -12,3 +12,16 @@ body {
   padding: 15px;
   margin: auto;
 }
+
+.selectedItem {
+  color: rgb(179, 176, 176);
+  font-size: 2rem;
+}
+
+.chart-switcher .selectedItem {
+  font-size: 1.5rem;
+}
+
+.selectContainer .listItem .item {
+  color: rgb(179, 176, 176);
+}
