@@ -4,34 +4,30 @@
   import { flip } from "svelte/animate";
   import { fade } from "svelte/transition";
   import Chart from "./Components/Chart.svelte";
-  import {
-    fetchCountries,
-    fetchTotalCountPerDay,
-    fetchSummary
-  } from "./service.js";
 
-  let countries = [];
-  let chartData = {
-    xaxis: [],
-    data: []
-  };
+  import countryStore from "./store/countries.js";
+  import statusStore from "./store/status.js";
+
+  let unSubcribeCountries;
 
   onMount(async () => {
-    try {
-      countries = await fetchCountries();
-    } catch (e) {
-      console.log("error: OnMount", e);
-    }
+    countryStore.fetch();
+
+    unSubcribeCountries = countryStore.subscribe(async store => {
+      if (store.selected) {
+        statusStore.fetchPerDayConfirmedStatus(store.selected);
+      }
+    });
   });
 
-  const onCountryChange = async ({ detail: option }) => {
-    try {
-      chartData = await fetchTotalCountPerDay(option.value);
-      await fetchSummary(option.value);
-    } catch (e) {
-      console.log("error: onCountryChange", e);
+  const onCountryChange = async ({ detail: option }) =>
+    countryStore.setSelected(option.value);
+
+  onDestroy(() => {
+    if (unSubcribeCountries) {
+      unSubcribeCountries();
     }
-  };
+  });
 </script>
 
 <style>
@@ -57,20 +53,33 @@
   }
 </style>
 
+<!-- <div>{JSON.stringify($statusStore)}</div> -->
+
 <div class="container">
   <div class="select-box in-header">
-    <Select
-      items={countries}
-      placeholder="Search for country"
-      on:select={onCountryChange} />
+    {#if $countryStore.isLoading}
+      <div>Loading...</div>
+    {:else}
+      <Select
+        items={$countryStore.countries}
+        placeholder="Search for country"
+        on:select={onCountryChange} />
+    {/if}
+
   </div>
 
   <div class="chart-holder in-content-1" transition:fade>
-    {#if chartData.xaxis.length && chartData.data.length}
+    {#if $statusStore.status.count.length && $statusStore.status.date.length}
       <h3>Confirmed cases</h3>
-      <Chart id="countByCuntry" seriesName="Count" {...chartData} />
-    {:else}
+      <Chart
+        id="countByCuntry"
+        seriesName="Count"
+        xaxis={$statusStore.status.date}
+        data={$statusStore.status.count} />
+    {:else if $countryStore.selected}
       <p>No records found</p>
+    {:else}
+      <p>Select a country</p>
     {/if}
   </div>
 </div>
