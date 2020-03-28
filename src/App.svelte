@@ -4,6 +4,8 @@
   import { flip } from "svelte/animate";
   import { fade } from "svelte/transition";
   import Chart from "./Components/Chart.svelte";
+  import Card from "./Components/Card.svelte";
+  import CountDisplay from "./Components/CountDisplay.svelte";
 
   import countryStore from "./store/countries.js";
   import statusStore from "./store/status.js";
@@ -15,7 +17,7 @@
     if ($countryStore.selected) {
       statusStore.fetchPerDayStatus(
         $countryStore.selected,
-        $statusStore.selected
+        $statusStore.selected.value
       );
       summaryStore.fetch($countryStore.selected);
     }
@@ -38,8 +40,8 @@
     grid-template-areas:
       "header . "
       "content1 content2";
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 1rem 1.5rem;
   }
 
   .in-header {
@@ -54,37 +56,19 @@
     grid-area: content2;
   }
 
-  .chart-holder {
-    margin-top: 20px;
-  }
-
   .summary-holder {
     word-break: break-word;
   }
 
-  /* table */
-
-  table {
-    border-collapse: collapse;
+  .select-box {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
   }
 
-  .table {
-    width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-  }
-
-  .table td,
-  .table th {
-    padding: 0.75rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-    text-align: left;
-  }
-
-  .table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
+  .chart-switcher {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin-bottom: 0.75rem;
   }
 </style>
 
@@ -96,58 +80,57 @@
       <Select
         items={$countryStore.countries}
         placeholder="Search for country"
-        on:select={onCountryChange} />
+        on:select={onCountryChange}
+        selectedValue={$countryStore.selected} />
     {/if}
 
   </div>
 
   <div class="chart-holder in-content-1" transition:fade>
-    {#if $statusStore.count.length && $statusStore.date.length}
-      <Select
-        items={$statusStore.statusList}
-        isClearable={false}
-        isSearchable={false}
-        selectedValue={$statusStore.selected}
-        on:select={onStatusChange} />
+    <Card>
+      {#if $statusStore.count.length && $statusStore.date.length}
+        <div class="chart-switcher">
+          <Select
+            items={$statusStore.statusList}
+            isClearable={false}
+            isSearchable={false}
+            selectedValue={$statusStore.selected}
+            on:select={onStatusChange} />
+        </div>
 
-      <Chart
-        id="countByCuntry"
-        seriesName="Count"
-        xaxis={$statusStore.date}
-        data={$statusStore.count} />
-    {:else if $countryStore.selected}
-      <p>No records found</p>
-    {:else}
-      <p>Select a country</p>
-    {/if}
+        <Chart
+          id="countByCuntry"
+          seriesName="Count"
+          xaxis={$statusStore.date}
+          data={$statusStore.count} />
+      {:else if $countryStore.selected}
+        <p>No records found</p>
+      {:else}
+        <p>Select a country</p>
+      {/if}
+    </Card>
   </div>
 
   <div class="summary-holder in-content-2">
-    <table class="table">
-      <thead>
-        <tr>
-          <th />
-          <th>New</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>Confirmed</th>
-          <td>{$summaryStore.newConfirmed}</td>
-          <td>{$summaryStore.totalConfirmed}</td>
-        </tr>
-        <tr>
-          <th>Deaths</th>
-          <td>{$summaryStore.newDeaths}</td>
-          <td>{$summaryStore.totalDeaths}</td>
-        </tr>
-        <tr>
-          <th>Recovered</th>
-          <td>{$summaryStore.newRecovered}</td>
-          <td>{$summaryStore.totalRecovered}</td>
-        </tr>
-      </tbody>
-    </table>
+    <Card title="Confirmed Cases">
+      <CountDisplay
+        colors={['rgb(241, 114, 114)']}
+        count={$summaryStore.newConfirmed}
+        total={$summaryStore.totalConfirmed} />
+    </Card>
+
+    <Card title="Death Cases">
+      <CountDisplay
+        colors={['rgb(241, 114, 114)']}
+        count={$summaryStore.newDeaths}
+        total={$summaryStore.totalDeaths} />
+    </Card>
+
+    <Card title="Recovered Cases">
+      <CountDisplay
+        colors={['#8cd681']}
+        count={$summaryStore.newRecovered}
+        total={$summaryStore.totalRecovered} />
+    </Card>
   </div>
 </div>
