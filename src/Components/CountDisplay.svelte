@@ -8,7 +8,7 @@
   .count-display {
     display: flex;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 1.75rem;
     font-weight: bold;
     color: var(--grey);
     align-items: center;
@@ -16,8 +16,17 @@
   }
 
   .split {
-    font-size: 4rem;
+    font-size: 2.5rem;
     padding: 0 0.75rem;
+  }
+
+  @media (min-width: 992px) {
+    .count-display {
+      font-size: 3rem;
+    }
+    .split {
+      font-size: 4rem;
+    }
   }
 </style>
 

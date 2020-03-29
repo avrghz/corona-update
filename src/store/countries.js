@@ -6,7 +6,7 @@ const createStore = () => {
   const store = writable({
     countries: [],
     error: null,
-    isLoading: true,
+    isLoading: false,
     selected: "Netherlands"
   });
 

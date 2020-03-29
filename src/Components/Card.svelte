@@ -7,16 +7,21 @@
     padding: 1.5rem 1.25rem 1rem 1.25rem;
     border: 1px solid var(--grey);
     margin-bottom: 1.5rem;
-    min-height: 100%;
   }
 
   h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0;
     line-height: 1;
     margin-bottom: 0.75rem;
     color: var(--grey);
     text-transform: uppercase;
+  }
+
+  @media (min-width: 992px) {
+    h3 {
+      font-size: 1.2rem;
+    }
   }
 </style>
 
