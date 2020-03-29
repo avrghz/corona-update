@@ -11,16 +11,16 @@
   import statusStore from "./store/status.js";
   import summaryStore from "./store/summary.js";
 
-  onMount(async () => {
-    countryStore.fetch();
-    if ($countryStore.selected) {
-      statusStore.fetchPerDayStatus(
-        $countryStore.selected,
-        $statusStore.selected
-      );
-      summaryStore.fetch($countryStore.selected);
-    }
-  });
+  // onMount(async () => {
+  //   countryStore.fetch();
+  //   if ($countryStore.selected) {
+  //     statusStore.fetchPerDayStatus(
+  //       $countryStore.selected,
+  //       $statusStore.selected
+  //     );
+  //     summaryStore.fetch($countryStore.selected);
+  //   }
+  // });
 
   const onCountryChange = async ({ detail: option }) => {
     countryStore.setSelected(option.value);
@@ -50,6 +50,7 @@
 
   .in-content-1 {
     grid-area: content1;
+    align-items: stretch;
   }
 
   .in-content-2 {
@@ -58,10 +59,6 @@
 
   .summary-holder {
     word-break: break-word;
-  }
-
-  .chart-holder {
-    min-height: 150px;
   }
 
   .select-box {
@@ -112,9 +109,9 @@
 <div class="container">
   <div class="select-box in-header">
     <div class="select-box-theme country-switcher">
-      <!-- {#if $countryStore.isLoading}
+      {#if $countryStore.isLoading}
         <span class="skeleton-box" />
-      {/if} -->
+      {/if}
       <Select
         items={$countryStore.countries}
         placeholder="Search Country here"
