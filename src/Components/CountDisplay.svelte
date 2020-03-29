@@ -1,7 +1,7 @@
 <script>
   export let count;
   export let total;
-  export let colors = ["rgb(179, 176, 176)", "rgb(179, 176, 176)"];
+  export let colors = ["var(--grey)", "var(--grey)"];
 </script>
 
 <style>
@@ -10,7 +10,7 @@
     justify-content: center;
     font-size: 3rem;
     font-weight: bold;
-    color: rgb(179, 176, 176);
+    color: var(--grey);
     align-items: center;
     line-height: 1;
   }

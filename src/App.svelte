@@ -80,21 +80,21 @@
     justify-content: flex-end;
     align-items: center;
     font-size: 0.9rem;
-    color: rgb(179, 176, 176);
+    color: var(--grey);
   }
 
   .select-box-theme {
     position: relative;
     --borderRadius: 0;
-    --placeholderColor: rgba(179, 176, 176, 0.25);
+    --placeholderColor: rgba(179, 176, 176, 0.35);
     --background: transparent;
-    --inputColor: rgb(179, 176, 176);
-    --border: 1px solid rgb(179, 176, 176);
+    --inputColor: var(--grey);
+    --border: 1px solid var(--grey);
     --listBackground: black;
     --listBorderRadius: 0;
     --itemIsActiveBG: rgb(0, 186, 230);
     --itemHoverBG: rgb(22, 69, 82);
-    --listShadow: 0 0 1px 1px rgb(179, 176, 176);
+    --listShadow: 0 0 1px 1px var(--grey);
     --itemFirstBorderRadius: 0;
   }
 
