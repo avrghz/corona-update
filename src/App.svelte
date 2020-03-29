@@ -13,7 +13,6 @@
 
   onMount(async () => {
     countryStore.fetch();
-
     if ($countryStore.selected) {
       statusStore.fetchPerDayStatus(
         $countryStore.selected,
@@ -85,6 +84,7 @@
   }
 
   .select-box-theme {
+    position: relative;
     --borderRadius: 0;
     --placeholderColor: rgba(179, 176, 176, 0.25);
     --background: transparent;
@@ -111,17 +111,16 @@
 
 <div class="container">
   <div class="select-box in-header">
-    {#if $countryStore.isLoading}
-      <div>Loading...</div>
-    {:else}
-      <div class="select-box-theme country-switcher" transition:fade>
-        <Select
-          items={$countryStore.countries}
-          placeholder="Search Country here"
-          on:select={onCountryChange}
-          selectedValue={$countryStore.selected} />
-      </div>
-    {/if}
+    <div class="select-box-theme country-switcher">
+      <!-- {#if $countryStore.isLoading}
+        <span class="skeleton-box" />
+      {/if} -->
+      <Select
+        items={$countryStore.countries}
+        placeholder="Search Country here"
+        on:select={onCountryChange}
+        selectedValue={$countryStore.selected} />
+    </div>
 
   </div>
 
