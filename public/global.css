@@ -35,11 +35,5 @@ body {
 }
 
 .in-content-1 .card {
-  height: 350px;
-}
-
-@media (min-width: 992px) {
-  .in-content-1 .card {
-    height: auto;
-  }
+  min-height: 350px;
 }

@@ -109,10 +109,6 @@
   }
 
   @media (min-width: 540px) {
-    .d-lg {
-      display: block;
-    }
-
     .select-box {
       grid-template-columns: 3fr 1fr;
     }
@@ -132,10 +128,11 @@
 
     .legend {
       margin-bottom: 0;
+      display: none;
     }
 
     .d-lg {
-      display: block;
+      display: flex;
     }
 
     .select-box {
@@ -186,7 +183,7 @@
         {/if}
 
         <Skeleton isLoading={$statusStore.isLoading} height="200px" top="50px">
-          {#if $statusStore.count.length && $statusStore.date.length}
+          {#if !$statusStore.isLoading && $statusStore.count.length && $statusStore.date.length}
             <Chart
               id="countByCuntry"
               seriesName="Count"
