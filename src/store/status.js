@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { format } from "date-fns";
+import { format, subMonths } from "date-fns";
 
 const root = "https://api.covid19api.com";
 
@@ -26,25 +26,35 @@ const createStore = () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const response = await fetch(`${root}/total/country/${country}/status/${status}`, {
-          method: "GET"
-        }).then(res => res.json());
+        const response = await fetch(
+          `${root}/live/country/${country}/status/${status}/date/${subMonths(new Date(), 1).toISOString()}`,
+          {
+            method: "GET"
+          }
+        ).then(res => res.json());
 
         if (!response) {
           throw new Error("No details fetched");
         }
 
+        const formattedResponse = response.reduce((acc, o) => {
+          const formattedDate = format(new Date(o.Date), "dd-MM-yy");
+          return { ...acc, ...{ [formattedDate]: { ...acc[formattedDate], ...{ [o.Province]: o.Cases } } } };
+        }, {});
+
+        const graphData = Object.keys(formattedResponse).reduce(
+          (acc, o) => ({
+            ...acc,
+            date: [...acc.date, o],
+            count: [...acc.count, Object.values(formattedResponse[o]).reduce((c, i) => c + i, 0)]
+          }),
+          { date: [], count: [] }
+        );
+
         store.update(s => ({
           ...s,
           isLoading: false,
-          ...response.reduce(
-            (acc, r) => ({
-              ...acc,
-              date: [...acc.date, format(new Date(r.Date), "dd-MM-yy")],
-              count: [...acc.count, r.Cases]
-            }),
-            { date: [], count: [] }
-          )
+          ...graphData
         }));
       } catch (err) {
         store.update(s => ({
