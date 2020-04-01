@@ -8,21 +8,16 @@
   import Skeleton from "../Components/Skeleton.svelte";
 
   import countryStore from "../store/countries.js";
-  import confirmedStore from "../store/confirmed.js";
-  import deathsStore from "../store/deaths.js";
-  import recoveredStore from "../store/recovered.js";
+  import statusStore from "../store/status.js";
   import casesStore from "../store/cases.js";
 
   onMount(() => {
-    if ($countryStore.selected) {
-      confirmedStore.fetchData($countryStore.selected);
-      // deathsStore.fetchData($countryStore.selected);
-      // recoveredStore.fetchData($countryStore.selected);
-    }
+    statusStore.fetchData($countryStore.selected, $casesStore.selcted);
   });
 
   const onStatusChange = async ({ detail: option }) => {
     casesStore.setSelected(option.value);
+    statusStore.fetchData($countryStore.selected, option.value);
   };
 </script>
 
@@ -52,7 +47,7 @@
 
 <Card>
   <div class="select-box-theme chart-switcher" transition:fade>
-    <Skeleton isLoading={$confirmedStore.isLoading}>
+    <Skeleton isLoading={$statusStore.isLoading}>
       <Select
         items={$casesStore.statusList}
         isClearable={false}
@@ -62,23 +57,21 @@
     </Skeleton>
   </div>
   <div class="chart-holder">
-    {#if $confirmedStore.isLoading}
+    {#if $statusStore.isLoading}
       <Skeleton
-        isLoading={$confirmedStore.isLoading}
+        isLoading={$statusStore.isLoading}
         height="30px"
         top="10px"
         width="50%"
         start="right" />
     {/if}
 
-    <Skeleton isLoading={$confirmedStore.isLoading} height="200px" top="50px">
-      {#if !$confirmedStore.isLoading && $confirmedStore.count.length && $confirmedStore.date.length}
-        <Chart
-          id="countByCuntry"
-          seriesName="Count"
-          xaxis={$confirmedStore.date}
-          data={$confirmedStore.count} />
-      {/if}
+    <Skeleton isLoading={$statusStore.isLoading}>
+      <Chart
+        id="countByCuntry"
+        seriesName="Count"
+        xaxis={$statusStore.date}
+        data={$statusStore.count} />
     </Skeleton>
   </div>
 

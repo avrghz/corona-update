@@ -18,7 +18,7 @@ const createStore = () => {
 
   return {
     subscribe: store.subscribe,
-    fetch: async country => {
+    fetchData: async country => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 

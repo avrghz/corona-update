@@ -4,7 +4,9 @@
   import Skeleton from "../Components/Skeleton.svelte";
 
   import countryStore from "../store/countries.js";
-  import confirmedStore from "../store/confirmed.js";
+  import casesStore from "../store/cases.js";
+  import statusStore from "../store/status.js";
+  import summaryStore from "../store/summary.js";
 
   onMount(() => {
     countryStore.fetch();
@@ -12,7 +14,8 @@
 
   const onCountryChange = async ({ detail: option }) => {
     countryStore.setSelected(option.value);
-    confirmedStore.fetchData(option.value);
+    statusStore.fetchData(option.value, $casesStore.selected);
+    summaryStore.fetchData(option.value);
   };
 </script>
 

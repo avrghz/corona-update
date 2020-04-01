@@ -22,7 +22,7 @@ const createStore = () => {
   return {
     subscribe: store.subscribe,
     setSelected: selected => store.update(s => ({ ...s, selected })),
-    fetchPerDayStatus: async (country, status = statusList[0].value) => {
+    fetchData: async (country, status = statusList[0].value) => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 

@@ -1,8 +1,14 @@
 <script>
+  import { onMount } from "svelte";
   import Card from "../Components/Card.svelte";
   import CountDisplay from "../Components/CountDisplay.svelte";
 
   import summaryStore from "../store/summary.js";
+  import countriesStore from "../store/countries.js";
+
+  onMount(() => {
+    summaryStore.fetchData($countriesStore.selected);
+  });
 </script>
 
 <style>
