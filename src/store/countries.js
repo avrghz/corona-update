@@ -7,7 +7,7 @@ const createStore = () => {
     countries: [],
     error: null,
     isLoading: false,
-    selected: "Netherlands"
+    selected: null
   });
 
   return {
@@ -25,19 +25,22 @@ const createStore = () => {
           throw new Error("No records fetched");
         }
 
+        const countries = data.reduce(
+          (acc, o) =>
+            !!o.Country
+              ? acc.concat({
+                  label: o.Country,
+                  value: o.Country,
+                  id: o.Slug
+                })
+              : acc,
+          []
+        );
+
         store.update(s => ({
           ...s,
-          countries: data.reduce(
-            (acc, o) =>
-              !!o.Country
-                ? acc.concat({
-                    label: o.Country,
-                    value: o.Country,
-                    id: o.Slug
-                  })
-                : acc,
-            []
-          ),
+          countries,
+          selected: countries.find(el => el.id === "netherlands"),
           isLoading: false
         }));
       } catch (err) {

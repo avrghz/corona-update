@@ -11,13 +11,9 @@
   import statusStore from "../store/status.js";
   import casesStore from "../store/cases.js";
 
-  onMount(() => {
-    statusStore.fetchData($countryStore.selected, $casesStore.selcted);
-  });
-
   const onStatusChange = async ({ detail: option }) => {
     casesStore.setSelected(option.value);
-    statusStore.fetchData($countryStore.selected, option.value);
+    statusStore.fetchData($countryStore.selected.id, option.value);
   };
 </script>
 

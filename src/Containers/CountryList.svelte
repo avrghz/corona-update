@@ -13,9 +13,9 @@
   });
 
   const onCountryChange = async ({ detail: option }) => {
-    countryStore.setSelected(option.value);
-    statusStore.fetchData(option.value, $casesStore.selected);
-    summaryStore.fetchData(option.value);
+    countryStore.setSelected(option);
+    statusStore.fetchData(option.id, $casesStore.selected);
+    summaryStore.fetchData(option.id);
   };
 </script>
 

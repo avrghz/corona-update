@@ -5,10 +5,6 @@
 
   import summaryStore from "../store/summary.js";
   import countriesStore from "../store/countries.js";
-
-  onMount(() => {
-    summaryStore.fetchData($countriesStore.selected);
-  });
 </script>
 
 <style>
