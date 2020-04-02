@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import Card from "../Components/Card.svelte";
   import CountDisplay from "../Components/CountDisplay.svelte";
 

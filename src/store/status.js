@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
 import { format, subMonths } from "date-fns";
-
-const root = "https://api.covid19api.com";
+import axios from "../axios";
 
 const statusList = [
   { label: "Confirmed", value: "Confirmed" },
@@ -26,12 +25,9 @@ const createStore = () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const response = await fetch(
-          `${root}/live/country/${country}/status/${status}/date/${subMonths(new Date(), 1).toISOString()}`,
-          {
-            method: "GET"
-          }
-        ).then(res => res.json());
+        const { data: response } = await axios.get(
+          `/live/country/${country}/status/${status}/date/${subMonths(new Date(), 1).toISOString()}`
+        );
 
         if (!response) {
           throw new Error("No details fetched");

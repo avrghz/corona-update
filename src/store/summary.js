@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import { format } from "date-fns";
 
-const root = "https://api.covid19api.com";
+import axios from "../axios";
 
 const createStore = () => {
   const store = writable({
@@ -22,9 +22,7 @@ const createStore = () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const response = await fetch(`${root}/summary`, {
-          method: "GET"
-        }).then(res => res.json());
+        const { data: response } = await axios.get(`/summary`);
 
         if (!response) {
           throw new Error("No details fetched");

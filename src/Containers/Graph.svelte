@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import Select from "svelte-select";
   import { flip } from "svelte/animate";
   import { fade, scale } from "svelte/transition";

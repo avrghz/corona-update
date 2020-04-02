@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import Select from "svelte-select";
   import Skeleton from "../Components/Skeleton.svelte";
 
@@ -7,10 +6,6 @@
   import casesStore from "../store/cases.js";
   import statusStore from "../store/status.js";
   import summaryStore from "../store/summary.js";
-
-  onMount(() => {
-    countryStore.fetch();
-  });
 
   const onCountryChange = async ({ detail: option }) => {
     countryStore.setSelected(option);

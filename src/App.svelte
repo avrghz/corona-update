@@ -3,6 +3,12 @@
   import Graph from "./Containers/Graph.svelte";
   import CountryList from "./Containers/CountryList.svelte";
   import Overview from "./Containers/Overview.svelte";
+
+  import countryStore from "./store/countries.js";
+
+  onMount(() => {
+    countryStore.fetch();
+  });
 </script>
 
 <style>

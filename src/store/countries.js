@@ -1,6 +1,5 @@
 import { writable } from "svelte/store";
-
-const root = "https://api.covid19api.com";
+import axios from "../axios";
 
 const createStore = () => {
   const store = writable({
@@ -17,15 +16,13 @@ const createStore = () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const data = await fetch(`${root}/countries`, {
-          method: "GET"
-        }).then(res => res.json());
+        const { data: response } = await axios.get("/countries");
 
-        if (!data) {
+        if (!response) {
           throw new Error("No records fetched");
         }
 
-        const countries = data.reduce(
+        const countries = response.reduce(
           (acc, o) =>
             !!o.Country
               ? acc.concat({
