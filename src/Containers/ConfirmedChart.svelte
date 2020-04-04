@@ -4,7 +4,7 @@
   import confirmedStore from "../store/confirmed.js";
 </script>
 
-<Card>
+<Card hasError={!$confirmedStore.isLoading && $confirmedStore.error}>
   <Chart
     id="confirmedCases"
     seriesName="Count"

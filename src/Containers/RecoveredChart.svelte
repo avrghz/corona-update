@@ -4,7 +4,7 @@
   import recoveredStore from "../store/recovered.js";
 </script>
 
-<Card>
+<Card hasError={!$recoveredStore.isLoading && $recoveredStore.error}>
   <Chart
     id="recoveredCases"
     seriesName="Count"

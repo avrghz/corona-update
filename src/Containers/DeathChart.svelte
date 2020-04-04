@@ -4,7 +4,7 @@
   import deathsStore from "../store/deaths.js";
 </script>
 
-<Card>
+<Card hasError={!$deathsStore.isLoading && $deathsStore.error}>
   <Chart
     id="deathCases"
     seriesName="Count"
