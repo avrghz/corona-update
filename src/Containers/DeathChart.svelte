@@ -10,5 +10,6 @@
     seriesName="Count"
     isLoading={$deathsStore.isLoading}
     xaxis={$deathsStore.date}
-    data={$deathsStore.count} />
+    data={$deathsStore.count}
+    colors={['rgb(241, 114, 114)']} />
 </Card>

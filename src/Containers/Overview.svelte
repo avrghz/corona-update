@@ -71,7 +71,7 @@
 <div class="overview">
   <Card title="Confirmed">
     <CountDisplay
-      colors={['rgb(241, 114, 114)']}
+      colors={['#ffd079']}
       count={newConfirmed}
       total={totalConfirmed} />
   </Card>

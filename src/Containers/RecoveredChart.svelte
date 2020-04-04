@@ -10,5 +10,6 @@
     seriesName="Count"
     isLoading={$recoveredStore.isLoading}
     xaxis={$recoveredStore.date}
-    data={$recoveredStore.count} />
+    data={$recoveredStore.count}
+    colors={['#8cd681']} />
 </Card>

@@ -10,5 +10,6 @@
     seriesName="Count"
     isLoading={$confirmedStore.isLoading}
     xaxis={$confirmedStore.date}
-    data={$confirmedStore.count} />
+    data={$confirmedStore.count}
+    colors={['#ffd079']} />
 </Card>
