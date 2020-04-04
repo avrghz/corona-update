@@ -2,12 +2,14 @@
   import { onMount, afterUpdate } from "svelte";
   import Chart from "chart.js";
   import ApexCharts from "apexcharts";
+  import Skeleton from "./Skeleton.svelte";
 
   export let id;
   export let seriesName;
   export let xaxis;
   export let data;
   export let colors = ["#00BAEC"];
+  export let isLoading = false;
 
   let chart;
 
@@ -62,4 +64,6 @@
   }
 </script>
 
-<div {id} />
+<Skeleton {isLoading}>
+  <div {id} />
+</Skeleton>
