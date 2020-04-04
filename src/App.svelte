@@ -18,62 +18,72 @@
     display: grid;
     grid-template-areas:
       "header"
-      "content2"
-      "content1";
+      "summary"
+      "recoveredChart"
+      "confirmedChart"
+      "deathChart";
     grid-gap: 1rem 1.5rem;
   }
 
-  .in-header {
-    grid-area: header;
-  }
-
-  .in-content-1 {
-    grid-area: content1;
-    align-items: stretch;
-  }
-
-  .in-content-2 {
-    grid-area: content2;
-  }
-
-  .summary-holder {
-    word-break: break-word;
-  }
-
-  .select-box {
-    display: grid;
-  }
-
   @media (min-width: 540px) {
-    .select-box {
-      grid-template-columns: 3fr 1fr;
+    .container {
+      grid-template-areas:
+        ". header header . "
+        ". summary summary ."
+        "recoveredChart recoveredChart recoveredChart recoveredChart"
+        "confirmedChart confirmedChart confirmedChart confirmedChart"
+        "deathChart deathChart deathChart deathChart";
+
+      grid-template-columns: 0.5fr 5fr 0.5fr;
     }
   }
 
   @media (min-width: 992px) {
     .container {
       grid-template-areas:
-        "header . "
-        "content1 content2";
-      grid-template-columns: 2.5fr 1.5fr;
-    }
+        ". header header . "
+        "confirmedChart confirmedChart summary summary"
+        "recoveredChart recoveredChart deathChart deathChart";
 
-    .select-box {
-      grid-template-columns: 1.5fr 1fr;
+      grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
     }
+  }
+
+  .select-box {
+    grid-area: header;
+  }
+
+  .chart-confirmed {
+    grid-area: confirmedChart;
+  }
+
+  .chart-deaths {
+    grid-area: deathChart;
+  }
+
+  .chart-recovered {
+    grid-area: recoveredChart;
+  }
+
+  .summary {
+    grid-area: summary;
   }
 </style>
 
 <div class="container">
-  <div class="select-box in-header">
+  <div class="select-box">
     <CountryList />
   </div>
-  <div class="in-content-1">
-    <ConfirmedChart />
-    <DeathChart />
-    <RecoveredChart />
-  </div>
-  <div class="summary-holder in-content-2">
+  <div class="summary">
     <Overview />
+  </div>
+  <div class="chart-confirmed">
+    <ConfirmedChart />
+  </div>
+  <div class="chart-deaths">
+    <DeathChart />
+  </div>
+  <div class="chart-recovered">
+    <RecoveredChart />
   </div>
 </div>

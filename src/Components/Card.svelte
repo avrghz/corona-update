@@ -6,7 +6,12 @@
   .card {
     padding: 1.5rem 1.25rem 1rem 1.25rem;
     border: 1px solid var(--grey);
-    margin-bottom: 1.5rem;
+
+    min-height: 100%;
+  }
+
+  .card + .card {
+    margin-top: 1rem;
   }
 
   h3 {
