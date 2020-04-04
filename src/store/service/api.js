@@ -14,7 +14,7 @@ export const fetchCountries = async () => {
         ? acc.concat({
             label: o.Country,
             value: o.Country,
-            id: o.Slug
+            id: o.Slug,
           })
         : acc,
     []
@@ -26,7 +26,7 @@ export const fetchCount = async (country, status) => {
     `/live/country/${country}/status/${status}/date/${subMonths(new Date(), 1).toISOString()}`
   );
 
-  if (!response) {
+  if (!response || response.length === 0) {
     throw new Error("No details fetched");
   }
 
@@ -39,7 +39,7 @@ export const fetchCount = async (country, status) => {
     (acc, o) => ({
       ...acc,
       date: [...acc.date, o],
-      count: [...acc.count, Object.values(formattedResponse[o]).reduce((c, i) => c + i, 0)]
+      count: [...acc.count, Object.values(formattedResponse[o]).reduce((c, i) => c + i, 0)],
     }),
     { date: [], count: [] }
   );
