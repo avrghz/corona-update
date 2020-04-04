@@ -1,6 +1,5 @@
 import { writable } from "svelte/store";
 import { fetchCount } from "./service/api";
-import { statusList } from "./statusList";
 
 const createStore = () => {
   const store = writable({
@@ -17,7 +16,7 @@ const createStore = () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const data = await fetchCount(country, statusList[0].value);
+        const data = await fetchCount(country, "Confirmed");
 
         store.update(s => ({
           ...s,

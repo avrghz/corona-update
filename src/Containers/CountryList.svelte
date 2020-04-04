@@ -3,7 +3,6 @@
   import Skeleton from "../Components/Skeleton.svelte";
 
   import countryStore from "../store/countries.js";
-  import casesStore from "../store/cases.js";
   import confirmedStore from "../store/confirmed.js";
   import deathsStore from "../store/deaths.js";
   import recoveredStore from "../store/recovered.js";
