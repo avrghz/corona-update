@@ -6,14 +6,12 @@
   import confirmedStore from "../store/confirmed.js";
   import deathsStore from "../store/deaths.js";
   import recoveredStore from "../store/recovered.js";
-  import summaryStore from "../store/summary.js";
 
   const onCountryChange = async ({ detail: option }) => {
     countryStore.setSelected(option);
     confirmedStore.fetchData(option.id);
     deathsStore.fetchData(option.id);
     recoveredStore.fetchData(option.id);
-    // summaryStore.fetchData(option.id);
   };
 </script>
 

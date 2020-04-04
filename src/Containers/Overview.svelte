@@ -1,7 +1,63 @@
 <script>
+  import { onMount, onDestroy } from "svelte";
   import Card from "../Components/Card.svelte";
   import CountDisplay from "../Components/CountDisplay.svelte";
-  import summaryStore from "../store/summary.js";
+  import confirmedStore from "../store/confirmed.js";
+  import deathsStore from "../store/deaths.js";
+  import recoveredStore from "../store/recovered.js";
+
+  let unSubscribeConfirmedStore;
+  let unSubscribeDeathsStore;
+  let unSubscribeRecoveredStore;
+  let totalConfirmed = 0;
+  let newConfirmed = 0;
+  let totalDeaths = 0;
+  let newDeaths = 0;
+  let totalRecovered = 0;
+  let newRecovered = 0;
+
+  const getTotalAndNew = count => {
+    const totalCount = count.length ? count[count.length - 1] : 0;
+    return {
+      totalCount,
+      newCount:
+        count.length > 1 ? totalCount - count[count.length - 2] : totalCount
+    };
+  };
+
+  onMount(() => {
+    unSubscribeConfirmedStore = confirmedStore.subscribe(({ count }) => {
+      const data = getTotalAndNew(count);
+      totalConfirmed = data.totalCount;
+      newConfirmed = data.newCount;
+    });
+
+    unSubscribeDeathsStore = deathsStore.subscribe(({ count }) => {
+      const data = getTotalAndNew(count);
+      totalDeaths = data.totalCount;
+      newDeaths = data.newCount;
+    });
+
+    unSubscribeRecoveredStore = recoveredStore.subscribe(({ count }) => {
+      const data = getTotalAndNew(count);
+      totalRecovered = data.totalCount;
+      newRecovered = data.newCount;
+    });
+  });
+
+  onDestroy(() => {
+    if (unSubscribeConfirmedStore) {
+      unSubscribeConfirmedStore();
+    }
+
+    if (unSubscribeDeathsStore) {
+      unSubscribeDeathsStore();
+    }
+
+    if (unSubscribeRecoveredStore) {
+      unSubscribeRecoveredStore();
+    }
+  });
 </script>
 
 <style>
@@ -16,21 +72,21 @@
   <Card title="Confirmed">
     <CountDisplay
       colors={['rgb(241, 114, 114)']}
-      count={$summaryStore.newConfirmed}
-      total={$summaryStore.totalConfirmed} />
+      count={newConfirmed}
+      total={totalConfirmed} />
   </Card>
 
   <Card title="Deaths">
     <CountDisplay
       colors={['rgb(241, 114, 114)']}
-      count={$summaryStore.newDeaths}
-      total={$summaryStore.totalDeaths} />
+      count={newDeaths}
+      total={totalDeaths} />
   </Card>
 
   <Card title="Recovered">
     <CountDisplay
       colors={['#8cd681']}
-      count={$summaryStore.newRecovered}
-      total={$summaryStore.totalRecovered} />
+      count={newRecovered}
+      total={totalRecovered} />
   </Card>
 </div>
