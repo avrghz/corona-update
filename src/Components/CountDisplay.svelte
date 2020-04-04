@@ -1,12 +1,33 @@
 <script>
+  import { tweened } from "svelte/motion";
+
   export let count;
   export let total;
   export let colors = ["var(--grey)", "var(--grey)"];
+
+  let tweenedTotal = tweened(0, {
+    interpolate: (a, b) => t => parseInt(b * t),
+    duration: 1000
+  });
+
+  let tweenedCount = tweened(0, {
+    interpolate: (a, b) => t => parseInt(b * t),
+    duration: 1000
+  });
+
+  $: {
+    tweenedTotal.set(total);
+  }
+
+  $: {
+    tweenedCount.set(count);
+  }
 </script>
 
 <style>
   .count-display {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
     justify-content: center;
     font-size: 1.75rem;
     font-weight: bold;
@@ -18,6 +39,11 @@
   .split {
     font-size: 2.5rem;
     padding: 0 0.75rem;
+    justify-self: center;
+  }
+
+  .first-col {
+    justify-self: flex-end;
   }
 
   @media (min-width: 992px) {
@@ -31,7 +57,11 @@
 </style>
 
 <div class="count-display">
-  <div style={colors[0] ? `color: ${colors[0]}` : ''}>{count}</div>
+  <div class="first-col" style={colors[0] ? `color: ${colors[0]}` : ''}>
+    {$tweenedCount}
+  </div>
   <div class="split">/</div>
-  <div style={colors[1] ? `color: ${colors[1]}` : ''}>{total}</div>
+  <div class="second-col" style={colors[1] ? `color: ${colors[1]}` : ''}>
+    {$tweenedTotal}
+  </div>
 </div>

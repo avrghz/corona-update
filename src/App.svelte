@@ -34,7 +34,7 @@
         "confirmedChart confirmedChart confirmedChart confirmedChart"
         "deathChart deathChart deathChart deathChart";
 
-      grid-template-columns: 0.5fr 5fr 0.5fr;
+      grid-template-columns: 0.5fr 2.5fr 2.5fr 0.5fr;
     }
   }
 
