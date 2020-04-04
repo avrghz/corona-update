@@ -5,15 +5,14 @@
   export let total;
   export let colors = ["var(--grey)", "var(--grey)"];
 
-  let tweenedTotal = tweened(0, {
-    interpolate: (a, b) => t => parseInt(b * t),
+  const tweenedSettings = {
+    interpolate: (a, b) => t => (!isNaN(b) ? parseInt(b * t) : b),
     duration: 1000
-  });
+  };
 
-  let tweenedCount = tweened(0, {
-    interpolate: (a, b) => t => parseInt(b * t),
-    duration: 1000
-  });
+  let tweenedTotal = tweened(0, tweenedSettings);
+
+  let tweenedCount = tweened(0, tweenedSettings);
 
   $: {
     tweenedTotal.set(total);
