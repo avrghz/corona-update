@@ -45,13 +45,14 @@
     left: 0;
     content: "";
     transform: translateX(-100%);
-    animation: shimmer 2s infinite;
+    animation: shimmer 0.8s infinite;
     background-image: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0) 0,
-      rgba(255, 255, 255, 0.05) 20%,
-      rgba(255, 255, 255, 0.125) 80%,
-      rgba(255, 255, 255, 0)
+      rgba(0,0,0, 0) 0,
+      rgba(0,0,0, 0.2) 20%,
+      rgba(0,0,0, 0.3) 60%,
+      rgba(0,0,0, 0.2) 80%,
+      rgba(0,0,0, 0)
     );
   }
 
