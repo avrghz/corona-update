@@ -1,4 +1,6 @@
 <script>
+  import { fade } from "svelte/transition";
+
   export let isLoading;
   export let height = null;
   export let width = null;
@@ -62,7 +64,7 @@
 
 <div class="skeleton-box">
   {#if isLoading}
-    <span class="skeleton-box-inner" style={createStyle()} />
+    <span transition={fade} class="skeleton-box-inner" style={createStyle()} />
   {/if}
   <slot />
 </div>

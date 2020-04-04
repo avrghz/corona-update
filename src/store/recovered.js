@@ -5,7 +5,7 @@ const initialState = {
   date: [],
   count: [],
   error: null,
-  isLoading: false
+  isLoading: true
 };
 
 const createStore = () => {
