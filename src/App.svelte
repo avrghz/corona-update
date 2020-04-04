@@ -5,7 +5,7 @@
   import RecoveredChart from "./Containers/RecoveredChart.svelte";
   import CountryList from "./Containers/CountryList.svelte";
   import Overview from "./Containers/Overview.svelte";
-
+  import Title from "./Components/Title.svelte";
   import countryStore from "./store/countries.js";
 
   onMount(() => {
@@ -51,6 +51,7 @@
 
   .select-box {
     grid-area: header;
+    margin-bottom: 1rem;
   }
 
   .chart-confirmed {
@@ -75,15 +76,19 @@
     <CountryList />
   </div>
   <div class="summary">
+    <Title>New Cases / Total Cases</Title>
     <Overview />
   </div>
   <div class="chart-confirmed">
+    <Title>Confirmed</Title>
     <ConfirmedChart />
   </div>
   <div class="chart-deaths">
+    <Title>Deaths</Title>
     <DeathChart />
   </div>
   <div class="chart-recovered">
+    <Title>Recovered</Title>
     <RecoveredChart />
   </div>
 </div>

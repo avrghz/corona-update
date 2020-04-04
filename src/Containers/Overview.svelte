@@ -1,41 +1,36 @@
 <script>
   import Card from "../Components/Card.svelte";
   import CountDisplay from "../Components/CountDisplay.svelte";
-
   import summaryStore from "../store/summary.js";
-  import countriesStore from "../store/countries.js";
 </script>
 
 <style>
-  .legend {
+  .overview {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-size: 0.9rem;
-    color: var(--grey);
-    margin-bottom: 1rem;
+    flex-flow: column;
+    justify-content: space-between;
   }
 </style>
 
-<div class="legend">New Cases / Total Cases</div>
+<div class="overview">
+  <Card title="Confirmed">
+    <CountDisplay
+      colors={['rgb(241, 114, 114)']}
+      count={$summaryStore.newConfirmed}
+      total={$summaryStore.totalConfirmed} />
+  </Card>
 
-<Card title="Confirmed Cases">
-  <CountDisplay
-    colors={['rgb(241, 114, 114)']}
-    count={$summaryStore.newConfirmed}
-    total={$summaryStore.totalConfirmed} />
-</Card>
+  <Card title="Deaths">
+    <CountDisplay
+      colors={['rgb(241, 114, 114)']}
+      count={$summaryStore.newDeaths}
+      total={$summaryStore.totalDeaths} />
+  </Card>
 
-<Card title="Death Cases">
-  <CountDisplay
-    colors={['rgb(241, 114, 114)']}
-    count={$summaryStore.newDeaths}
-    total={$summaryStore.totalDeaths} />
-</Card>
-
-<Card title="Recovered Cases">
-  <CountDisplay
-    colors={['#8cd681']}
-    count={$summaryStore.newRecovered}
-    total={$summaryStore.totalRecovered} />
-</Card>
+  <Card title="Recovered">
+    <CountDisplay
+      colors={['#8cd681']}
+      count={$summaryStore.newRecovered}
+      total={$summaryStore.totalRecovered} />
+  </Card>
+</div>

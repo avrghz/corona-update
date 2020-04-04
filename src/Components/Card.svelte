@@ -4,10 +4,8 @@
 
 <style>
   .card {
-    padding: 1.5rem 1.25rem 1rem 1.25rem;
+    padding: 1rem;
     border: 1px solid var(--grey);
-
-    min-height: 100%;
   }
 
   .card + .card {
@@ -20,7 +18,7 @@
     line-height: 1;
     margin-bottom: 0.75rem;
     color: var(--grey);
-    text-transform: uppercase;
+    text-transform: capitalize;
   }
 
   @media (min-width: 992px) {
