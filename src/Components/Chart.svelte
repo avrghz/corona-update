@@ -40,7 +40,13 @@
         rotateAlways: true,
         offsetY: 10
       }
-    }
+    },
+    responsive: [
+      {
+        breakpoint: [540, 992],
+        options: {}
+      }
+    ]
   };
 
   onMount(async () => {

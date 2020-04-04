@@ -23,6 +23,7 @@
       "confirmedChart"
       "deathChart";
     grid-gap: 1rem 1.5rem;
+    max-width: 100%;
   }
 
   @media (min-width: 540px) {
