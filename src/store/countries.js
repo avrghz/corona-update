@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import axios from "../axios";
+import { fetchCountries } from "./service/api";
 
 const createStore = () => {
   const store = writable({
@@ -16,23 +16,7 @@ const createStore = () => {
       try {
         store.update(s => ({ ...s, isLoading: true }));
 
-        const { data: response } = await axios.get("/countries");
-
-        if (!response) {
-          throw new Error("No records fetched");
-        }
-
-        const countries = response.reduce(
-          (acc, o) =>
-            !!o.Country
-              ? acc.concat({
-                  label: o.Country,
-                  value: o.Country,
-                  id: o.Slug
-                })
-              : acc,
-          []
-        );
+        const countries = await fetchCountries();
 
         store.update(s => ({
           ...s,
