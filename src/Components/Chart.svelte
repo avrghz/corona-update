@@ -18,9 +18,9 @@
       type: "area",
       toolbar: {
         tools: {
-          download: true,
-          selection: true,
-          zoom: true,
+          download: false,
+          selection: false,
+          zoom: false,
           zoomin: true,
           zoomout: true,
           pan: false
@@ -35,7 +35,11 @@
       }
     ],
     xaxis: {
-      categories: []
+      categories: [],
+      labels: {
+        rotateAlways: true,
+        offsetY: 10
+      }
     }
   };
 

@@ -21,7 +21,11 @@
     return {
       totalCount,
       newCount:
-        count.length > 1 ? totalCount - count[count.length - 2] : totalCount
+        count.length > 1
+          ? totalCount - count[count.length - 2] > -1
+            ? totalCount - count[count.length - 2]
+            : 0
+          : 0
     };
   };
 
