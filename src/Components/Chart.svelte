@@ -41,21 +41,26 @@
         offsetY: 10
       }
     },
+    width: "100%",
     responsive: [
       {
-        breakpoint: [540, 992],
+        breakpoint: 540,
         options: {}
       }
     ]
   };
 
-  onMount(async () => {
-    chart = new ApexCharts(document.querySelector(`#${id}`), options);
-    chart.render();
-  });
+  $: {
+    updateChart(xaxis, data, seriesName);
+  }
 
   afterUpdate(() => {
-    updateChart(xaxis, data, seriesName);
+    setTimeout(() => {
+      if (!chart) {
+        chart = new ApexCharts(document.querySelector(`#${id}`), options);
+        chart.render();
+      }
+    });
   });
 
   function updateChart(categories, chatData, name) {
