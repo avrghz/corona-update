@@ -4,13 +4,17 @@
 
   import countryStore from "../store/countries.js";
   import casesStore from "../store/cases.js";
-  import statusStore from "../store/status.js";
+  import confirmedStore from "../store/confirmed.js";
+  import deathsStore from "../store/deaths.js";
+  import recoveredStore from "../store/recovered.js";
   import summaryStore from "../store/summary.js";
 
   const onCountryChange = async ({ detail: option }) => {
     countryStore.setSelected(option);
-    statusStore.fetchData(option.id, $casesStore.selected);
-    summaryStore.fetchData(option.id);
+    confirmedStore.fetchData(option.id);
+    deathsStore.fetchData(option.id);
+    recoveredStore.fetchData(option.id);
+    // summaryStore.fetchData(option.id);
   };
 </script>
 

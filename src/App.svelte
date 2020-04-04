@@ -1,6 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import Graph from "./Containers/Graph.svelte";
+  import ConfirmedChart from "./Containers/ConfirmedChart.svelte";
+  import DeathChart from "./Containers/DeathChart.svelte";
+  import RecoveredChart from "./Containers/RecoveredChart.svelte";
   import CountryList from "./Containers/CountryList.svelte";
   import Overview from "./Containers/Overview.svelte";
 
@@ -67,7 +69,9 @@
     <CountryList />
   </div>
   <div class="in-content-1">
-    <Graph />
+    <ConfirmedChart />
+    <DeathChart />
+    <RecoveredChart />
   </div>
   <div class="summary-holder in-content-2">
     <Overview />
