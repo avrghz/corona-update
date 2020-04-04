@@ -4,7 +4,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "serve public"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.0",
@@ -21,6 +21,7 @@
     "chart.js": "^2.9.3",
     "date-fns": "^2.11.1",
     "moment": "^2.24.0",
+    "serve": "^11.3.0",
     "sirv-cli": "^0.4.4",
     "svelte-select": "^3.6.2"
   }
