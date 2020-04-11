@@ -5,7 +5,7 @@ const initialState = {
   date: [],
   count: [],
   error: null,
-  isLoading: true
+  isLoading: true,
 };
 
 const createStore = () => {
@@ -13,26 +13,26 @@ const createStore = () => {
 
   return {
     subscribe: store.subscribe,
-    fetchData: async country => {
+    fetchData: async (country) => {
       try {
-        store.update(s => ({ ...s, ...initialState, isLoading: true }));
+        store.update((s) => ({ ...s, ...initialState, isLoading: true }));
 
         const data = await fetchCount(country, "Confirmed");
 
-        store.update(s => ({
+        store.update((s) => ({
           ...s,
           isLoading: false,
-          ...data
+          ...data,
         }));
       } catch (err) {
-        store.update(s => ({
+        store.update((s) => ({
           ...s,
           ...initialState,
           error: err.message,
-          isLoading: false
+          isLoading: false,
         }));
       }
-    }
+    },
   };
 };
 

@@ -24,7 +24,7 @@
         count.length > 1
           ? totalCount - count[count.length - 2] > -1
             ? totalCount - count[count.length - 2]
-            : "--"
+            : 0
           : 0
     };
   };

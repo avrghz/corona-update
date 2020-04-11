@@ -1,4 +1,4 @@
-import { format, subMonths } from "date-fns";
+import { format, subMonths, isAfter } from "date-fns";
 import axios from "./axios";
 
 export const fetchCountries = async () => {
@@ -23,15 +23,24 @@ export const fetchCountries = async () => {
 
 export const fetchCount = async (country, status) => {
   const { data: response } = await axios.get(
-    `/live/country/${country}/status/${status}/date/${subMonths(new Date(), 1).toISOString()}`
+    `https://api.covid19api.com/country/${country.toLowerCase()}/status/${status.toLowerCase()}`
   );
 
   if (!response || response.length === 0) {
     throw new Error("No details fetched");
   }
 
+  const fromDate = subMonths(new Date(), 1);
+
   const formattedResponse = response.reduce((acc, o) => {
-    const formattedDate = format(new Date(o.Date), "dd-MM-yy");
+    const date = new Date(o.Date);
+
+    if (isAfter(fromDate, date)) {
+      return acc;
+    }
+
+    const formattedDate = format(date, "dd-MM-yy");
+
     return { ...acc, ...{ [formattedDate]: { ...acc[formattedDate], ...{ [o.Province]: o.Cases } } } };
   }, {});
 
