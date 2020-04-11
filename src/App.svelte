@@ -9,7 +9,7 @@
   import countryStore from "./store/countries.js";
 
   onMount(() => {
-    // countryStore.fetch();
+    countryStore.fetch();
   });
 </script>
 
